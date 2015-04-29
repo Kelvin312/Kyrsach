@@ -148,7 +148,6 @@ namespace Курсачь
             lstReplaceMenu.Visible = true;
         }
 
-
         TreeLayer Groot = new TreeLayer();
 
         private void TextForm_Load(object sender, EventArgs e)
