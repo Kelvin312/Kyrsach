@@ -37,7 +37,7 @@ namespace Курсачь
             foundWordList.Clear();
             string foundWord = "";
             searchWordTree(root, word, 0, foundWord, 0, maxDist);
-            if (foundWordList.Count < 20)
+            if (foundWordList.Count < 20) //Если нашли подозрительно мало, поищем ещё
             {
                 foundWordList.Clear();
                 foundWord = "";
@@ -77,26 +77,27 @@ namespace Курсачь
             }
         }
 
-        public void addWord(string word, int rating = 1)
+        public void addWord(string word, int rating = 1, bool create = true)
         {            
-            addWordTree(root, word, 0, rating);
+            addWordTree(root, word, 0, rating, create);
         }
 
-        private void addWordTree(Tree node, string addedWord, int addedIndex, int rating)
+        private void addWordTree(Tree node, string addedWord, int addedIndex, int rating, bool create)
         {
             char i = addedWord[addedIndex];
             if (!node.child.ContainsKey(i))
             {
+                if(!create) return;
                 node.child.Add(i, new Tree());
             }
             node = node.child[i];
 
             if (++addedIndex >= addedWord.Length)
             {
-                node.rating += rating;
+                if(create || node.rating>0) node.rating += rating;
                 return;
             }
-            addWordTree(node, addedWord, addedIndex, rating);
+            addWordTree(node, addedWord, addedIndex, rating, create);
         }
 
         private List<short> convertWordToList(string word)
